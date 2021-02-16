@@ -1,6 +1,7 @@
 class PrettyPalette {
   constructor() {
     this.color = document.querySelectorAll(".color");
+    this.currentHexes = document.querySelectorAll(".color h2");
     this.generateBtn = document.querySelector(".generate");
     this.sliders = document.querySelectorAll("input[type='range']");
     let initialColors;
@@ -32,6 +33,10 @@ class PrettyPalette {
 
       //contrast check
       this.checkTextContrast(randomColor, hexText);
+
+      const icon = div.querySelector(".controls button");
+
+      this.checkTextContrast(randomColor, icon);
 
       //   Initialize slider color
       const color = chroma(randomColor);
@@ -137,6 +142,30 @@ class PrettyPalette {
       }
     });
   }
+  copyToClipboard(hex) {
+    const element = document.createElement("textarea");
+    element.value = hex.innerText;
+    document.body.appendChild(element);
+    element.select();
+    document.execCommand("copy");
+    document.body.removeChild(element);
+
+    //popup Animation
+    const popup = document.querySelector(".copy-container");
+    const popupBox = popup.children[0];
+    popup.classList.add("active");
+    popupBox.classList.add("active");
+
+    popup.addEventListener("transitionend", () => {
+      popup.classList.remove("active");
+      popupBox.classList.remove("active");
+    });
+    //can also remove the class by setTimeout
+    // setTimeout(() => {
+    //   popup.classList.remove("active");
+    //   popupBox.classList.remove("active");
+    // }, 1000);
+  }
 }
 
 const colorPalette = new PrettyPalette();
@@ -152,5 +181,11 @@ colorPalette.sliders.forEach((slider) => {
 colorPalette.color.forEach((div, index) => {
   div.addEventListener("change", () => {
     colorPalette.updateTextUi(index);
+  });
+});
+
+colorPalette.currentHexes.forEach((hex) => {
+  hex.addEventListener("click", () => {
+    colorPalette.copyToClipboard(hex);
   });
 });

@@ -103,3 +103,40 @@ input[type="range"] {
   position: relative;
   cursor: pointer;
 }
+
+.copy-container {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  @include flex(row, center, center);
+
+  .copy-popup {
+    background: white;
+    @include flex(column, space-evenly, center);
+    border-radius: 2rem;
+    min-width: 30%;
+    min-height: 30vh;
+    transition: transform 0.5s ease-in-out;
+    transform: translateY(-2rem);
+
+    h4 {
+      font-size: 2rem;
+      padding: 2rem;
+    }
+  }
+}
+
+.copy-container.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.copy-popup.active {
+  transform: translateY(0rem);
+}
