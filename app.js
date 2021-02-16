@@ -94,6 +94,9 @@ class PrettyPalette {
       .set("hsl.h", hue.value);
 
     this.color[index].style.backgroundColor = color;
+
+    //colorize input/sliders with movement if we change brightness saturation should be auto updated
+    this.colorizeSliders(color, hue, brightness, saturation);
   }
   updateTextUi(index) {
     const currentDiv = this.color[index];
