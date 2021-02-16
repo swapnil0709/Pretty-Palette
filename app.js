@@ -87,6 +87,21 @@ class PrettyPalette {
 
     this.color[index].style.backgroundColor = color;
   }
+  updateTextUi(index) {
+    const currentDiv = this.color[index];
+    const color = chroma(currentDiv.style.backgroundColor);
+
+    const currentText = currentDiv.querySelector("h2");
+    const icons = currentDiv.querySelectorAll(".controls button");
+
+    currentText.innerText = color.hex();
+
+    this.checkTextContrast(color, currentText);
+    for (let icon of icons) {
+      console.log(icon);
+      this.checkTextContrast(color, icon);
+    }
+  }
 }
 
 const colorPalette = new PrettyPalette();
@@ -96,5 +111,11 @@ colorPalette.generateButton();
 colorPalette.sliders.forEach((slider) => {
   slider.addEventListener("input", (e) => {
     colorPalette.hslControls(e);
+  });
+});
+
+colorPalette.color.forEach((div, index) => {
+  div.addEventListener("change", () => {
+    colorPalette.updateTextUi(index);
   });
 });
