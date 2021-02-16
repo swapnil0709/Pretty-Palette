@@ -40,6 +40,8 @@ class PrettyPalette {
 
       this.colorizeSliders(color, hue, brightness, saturation);
     });
+    //Reset Inputs
+    this.resetInputs();
   }
   generateButton() {
     this.generateBtn.addEventListener("click", () => {
@@ -104,9 +106,33 @@ class PrettyPalette {
 
     this.checkTextContrast(color, currentText);
     for (let icon of icons) {
-      console.log(icon);
       this.checkTextContrast(color, icon);
     }
+  }
+  resetInputs() {
+    const sliderInputs = document.querySelectorAll(".sliders input");
+    sliderInputs.forEach((slider) => {
+      if (slider.name === "hue") {
+        const hueColor = this.initialColors[slider.getAttribute("data-hue")];
+        const hueValue = chroma(hueColor).hsl()[0]; // h=hue index 0
+        slider.value = Math.floor(hueValue);
+      }
+
+      if (slider.name === "brightness") {
+        const brightColor = this.initialColors[
+          slider.getAttribute("data-bright")
+        ];
+        const brightValue = chroma(brightColor).hsl()[2]; //l=brightness index 2
+        slider.value = Math.floor(brightValue * 100) / 100;
+      }
+
+      if (slider.name === "saturation") {
+        const satColor = this.initialColors[slider.getAttribute("data-sat")];
+        const satValue = chroma(satColor).hsl()[1]; //s = saturation index 1
+
+        slider.value = Math.floor(satValue * 100) / 100;
+      }
+    });
   }
 }
 
