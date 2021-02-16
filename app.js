@@ -5,13 +5,14 @@ class PrettyPalette {
   }
 
   generateColors() {
-    //Generating colors manually
-    // const letters = "0123456789abcdef";
-    // let hash = "#";
-    // for (let i = 0; i < 6; i++) {
-    //   hash += letters[Math.floor(Math.random() * 16)];
-    // }
-    // return hash;
+    /* Generating colors manually
+    const letters = "0123456789abcdef";
+    let hash = "#";
+    for (let i = 0; i < 6; i++) {
+      hash += letters[Math.floor(Math.random() * 16)];
+    }
+    return hash;
+    */
 
     return chroma.random(); //using chroma library
   }
@@ -22,6 +23,9 @@ class PrettyPalette {
 
       hexText.innerText = randomColor;
       div.style.background = randomColor;
+
+      //contrast check
+      colorPalette.checkTextContrast(randomColor, hexText);
     });
   }
   generateButton() {
@@ -29,10 +33,13 @@ class PrettyPalette {
       colorPalette.applyColors();
     });
   }
+  checkTextContrast(color, text) {
+    const luminance = chroma(color).luminance();
+    console.log(luminance);
+    text.style.color = luminance > 0.5 ? "black" : "white";
+  }
 }
 
 const colorPalette = new PrettyPalette();
-
-const generatedColor = colorPalette.generateColors();
 colorPalette.applyColors();
 colorPalette.generateButton();
