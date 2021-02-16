@@ -71,20 +71,17 @@ path {
           align-items: none;
   position: absolute;
   background: white;
-  opacity: 0;
   bottom: 0%;
   padding: 1rem;
   width: 80%;
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
-  pointer-events: none;
-  -webkit-transform: translateY(100px);
-          transform: translateY(100px);
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 }
 
 .sliders button {
+  outline: none;
   position: absolute;
   top: 0;
   right: 0;
@@ -116,6 +113,7 @@ path {
 }
 
 .panel button {
+  outline: none;
   font-size: 1.2rem;
   padding: 1rem 2rem;
   background: black;
@@ -173,12 +171,22 @@ path {
 }
 
 .controls button {
+  outline: none;
   margin: 1rem;
   background: none;
   border: none;
   padding: 1rem;
   border-radius: 1rem;
   font-size: 2rem;
+  cursor: pointer;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 1rem 0rem;
+  width: 100%;
+  border-radius: 1rem;
+  position: relative;
   cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */

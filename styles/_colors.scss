@@ -20,18 +20,19 @@
   @include flex(column, none, none);
   position: absolute;
   background: white;
-  opacity: 0;
+  // opacity: 0;
   bottom: 0%;
   padding: 1rem;
   width: 80%;
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
-  pointer-events: none;
+  // pointer-events: none;
   // We are adding adjustment class
-  transform: translateY(100px);
+  // transform: translateY(100px);
   transition: all 0.5s ease-in-out;
 
   button {
+    outline: none;
     position: absolute;
     top: 0;
     right: 0;
@@ -50,6 +51,7 @@
   height: 20vh;
 
   button {
+    outline: none;
     font-size: 1.2rem;
     padding: 1rem 2rem;
     background: black;
@@ -81,6 +83,7 @@
   @include flex(column, center, center);
 
   button {
+    outline: none;
     margin: 1rem;
     background: none;
     border: none;
@@ -89,4 +92,14 @@
     font-size: 2rem;
     cursor: pointer;
   }
+}
+
+// Slider
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 1rem 0rem;
+  width: 100%;
+  border-radius: 1rem;
+  position: relative;
+  cursor: pointer;
 }
