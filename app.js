@@ -3,6 +3,7 @@ class PrettyPalette {
     this.color = document.querySelectorAll(".color");
     this.generateBtn = document.querySelector(".generate");
     this.sliders = document.querySelectorAll("input[type='range']");
+    let initialColors;
   }
 
   generateColors() {
@@ -17,12 +18,17 @@ class PrettyPalette {
     return chroma.random(); //using chroma library
   }
   applyColors() {
+    this.initialColors = [];
+
     this.color.forEach((div, index) => {
       const hexText = div.children[0];
       const randomColor = this.generateColors();
 
       hexText.innerText = randomColor;
       div.style.background = randomColor;
+
+      // Add generated color to array
+      this.initialColors.push(randomColor.hex());
 
       //contrast check
       this.checkTextContrast(randomColor, hexText);
@@ -78,7 +84,7 @@ class PrettyPalette {
     let slider = e.target.parentElement.querySelectorAll("input[type='range']");
 
     const [hue, brightness, saturation] = slider; //Extracting individual values
-    const bgColor = this.color[index].querySelector("h2").innerText;
+    const bgColor = this.initialColors[index];
 
     let color = chroma(bgColor)
       .set("hsl.s", saturation.value)
