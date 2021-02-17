@@ -372,6 +372,8 @@ input[type="range"] {
           align-items: center;
   width: 100%;
   padding: 2rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .custom-palette h4 {

@@ -191,6 +191,7 @@ input[type="range"] {
   @include flex(row, space-evenly, center);
   width: 100%;
   padding: 2rem;
+  flex-wrap: wrap;
 
   h4 {
     flex: 1;
