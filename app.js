@@ -248,6 +248,33 @@ class PrettyPalette {
     //Save to Local storage
     this.saveToLocal(paletteObject);
     this.saveInput.value = "";
+
+    // Generate palette for library
+    const palette = document.createElement("div");
+    palette.classList.add("custom-palette");
+    const title = document.createElement("h4");
+    title.innerText = paletteObject.name;
+    const preview = document.createElement("div");
+    preview.classList.add("small-preview");
+
+    paletteObject.colors.forEach((color) => {
+      const smallDiv = document.createElement("div");
+      smallDiv.style.backgroundColor = color;
+      preview.appendChild(smallDiv);
+    });
+
+    const paletteBtn = document.createElement("button");
+
+    paletteBtn.classList.add("pick-palette-btn");
+
+    paletteBtn.classList.add(paletteObject.Num);
+    paletteBtn.innerText = "Select";
+
+    //Append to Library
+    palette.appendChild(title);
+    palette.appendChild(preview);
+    palette.appendChild(paletteBtn);
+    this.libraryPopup.appendChild(palette);
   }
   saveToLocal(obj) {
     let localPalettes;

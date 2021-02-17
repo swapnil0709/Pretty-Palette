@@ -355,4 +355,56 @@ input[type="range"] {
   -webkit-transform: translateY(0rem);
           transform: translateY(0rem);
 }
+
+.custom-palette {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  padding: 2rem;
+}
+
+.custom-palette h4 {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.custom-palette div {
+  height: 5rem;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.small-preview {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.pick-palette-btn {
+  height: 5rem;
+  outline: none;
+  border: none;
+  font-size: 1.2rem;
+  background: black;
+  border: none;
+  cursor: pointer;
+  color: white;
+  padding: 1rem;
+}
 /*# sourceMappingURL=style.css.map */
