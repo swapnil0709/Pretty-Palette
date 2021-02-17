@@ -20,15 +20,15 @@
   @include flex(column, none, none);
   position: absolute;
   background: white;
-  // opacity: 0;
+  opacity: 0;
   bottom: 0%;
   padding: 1rem;
   width: 80%;
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
-  // pointer-events: none;
+  pointer-events: none;
   // We are adding adjustment class
-  // transform: translateY(100px);
+  transform: translateY(100px);
   transition: all 0.5s ease-in-out;
 
   button {
@@ -46,6 +46,7 @@
     border-bottom-left-radius: 1rem;
   }
 }
+
 .panel {
   @include flex(row, space-evenly, center);
   height: 20vh;
@@ -81,7 +82,7 @@
 
 .controls {
   @include flex(column, center, center);
-
+  transition: all 0.5s ease;
   button {
     outline: none;
     margin: 1rem;
@@ -104,7 +105,9 @@ input[type="range"] {
   cursor: pointer;
 }
 
-.copy-container {
+.copy-container,
+.save-container,
+.library-container {
   position: fixed;
   top: 0%;
   left: 0%;
@@ -116,7 +119,9 @@ input[type="range"] {
   transition: all 0.5s ease;
   @include flex(row, center, center);
 
-  .copy-popup {
+  .copy-popup,
+  .save-popup,
+  .library-popup {
     background: white;
     @include flex(column, space-evenly, center);
     border-radius: 2rem;
@@ -125,6 +130,21 @@ input[type="range"] {
     transition: transform 0.5s ease-in-out;
     transform: translateY(-2rem);
 
+    button {
+      outline: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.5rem;
+      background: black;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      border-top-right-radius: 1rem;
+      border-bottom-left-radius: 1rem;
+    }
+
     h4 {
       font-size: 2rem;
       padding: 2rem;
@@ -132,11 +152,15 @@ input[type="range"] {
   }
 }
 
-.copy-container.active {
+.copy-container.active,
+.save-container.active,
+.library-container.active {
   opacity: 1;
   pointer-events: all;
 }
 
-.copy-popup.active {
+.copy-popup.active,
+.save-popup.active,
+.library-popup.active {
   transform: translateY(0rem);
 }

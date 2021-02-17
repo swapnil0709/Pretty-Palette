@@ -71,11 +71,15 @@ path {
           align-items: none;
   position: absolute;
   background: white;
+  opacity: 0;
   bottom: 0%;
   padding: 1rem;
   width: 80%;
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
+  pointer-events: none;
+  -webkit-transform: translateY(100px);
+          transform: translateY(100px);
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 }
@@ -168,6 +172,8 @@ path {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .controls button {
@@ -190,7 +196,9 @@ input[type="range"] {
   cursor: pointer;
 }
 
-.copy-container {
+.copy-container,
+.save-container,
+.library-container {
   position: fixed;
   top: 0%;
   left: 0%;
@@ -216,7 +224,15 @@ input[type="range"] {
           align-items: center;
 }
 
-.copy-container .copy-popup {
+.copy-container .copy-popup,
+.copy-container .save-popup,
+.copy-container .library-popup,
+.save-container .copy-popup,
+.save-container .save-popup,
+.save-container .library-popup,
+.library-container .copy-popup,
+.library-container .save-popup,
+.library-container .library-popup {
   background: white;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -242,17 +258,52 @@ input[type="range"] {
           transform: translateY(-2rem);
 }
 
-.copy-container .copy-popup h4 {
+.copy-container .copy-popup button,
+.copy-container .save-popup button,
+.copy-container .library-popup button,
+.save-container .copy-popup button,
+.save-container .save-popup button,
+.save-container .library-popup button,
+.library-container .copy-popup button,
+.library-container .save-popup button,
+.library-container .library-popup button {
+  outline: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  background: black;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.copy-container .copy-popup h4,
+.copy-container .save-popup h4,
+.copy-container .library-popup h4,
+.save-container .copy-popup h4,
+.save-container .save-popup h4,
+.save-container .library-popup h4,
+.library-container .copy-popup h4,
+.library-container .save-popup h4,
+.library-container .library-popup h4 {
   font-size: 2rem;
   padding: 2rem;
 }
 
-.copy-container.active {
+.copy-container.active,
+.save-container.active,
+.library-container.active {
   opacity: 1;
   pointer-events: all;
 }
 
-.copy-popup.active {
+.copy-popup.active,
+.save-popup.active,
+.library-popup.active {
   -webkit-transform: translateY(0rem);
           transform: translateY(0rem);
 }

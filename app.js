@@ -4,7 +4,41 @@ class PrettyPalette {
     this.currentHexes = document.querySelectorAll(".color h2");
     this.generateBtn = document.querySelector(".generate");
     this.sliders = document.querySelectorAll("input[type='range']");
+    this.adjust = document.querySelectorAll(".adjust");
+    this.sliderClose = document.querySelectorAll(".close-adjustment");
+    this.lock = document.querySelectorAll(".lock");
+    this.save = document.querySelector(".save");
+    this.saveBtn = document.querySelector(".submit-save");
+    this.saveContainer = document.querySelector(".save-container");
+    this.savePopup = document.querySelector(".save-popup");
+    this.closeSave = document.querySelector(".close-save");
+    this.library = document.querySelector(".library");
+    this.libraryBtn = document.querySelector(".close-library");
+    this.libraryContainer = document.querySelector(".library-container");
+    this.libraryPopup = document.querySelector(".library-popup");
+    this.closeLibrary = document.querySelector(".close-library");
     let initialColors;
+  }
+  eventListeners() {
+    //Save Button
+    this.save.addEventListener("click", (e) => {
+      this.saveContainer.classList.add("active");
+      this.savePopup.classList.add("active");
+    });
+    this.closeSave.addEventListener("click", () => {
+      this.saveContainer.classList.remove("active");
+      this.savePopup.classList.remove("active");
+    });
+
+    // Library Button
+    this.library.addEventListener("click", (e) => {
+      this.libraryContainer.classList.add("active");
+      this.libraryPopup.classList.add("active");
+    });
+    this.closeLibrary.addEventListener("click", () => {
+      this.libraryContainer.classList.remove("active");
+      this.libraryPopup.classList.remove("active");
+    });
   }
 
   generateColors() {
@@ -25,18 +59,25 @@ class PrettyPalette {
       const hexText = div.children[0];
       const randomColor = this.generateColors();
 
+      // Add generated color to array
+      if (div.classList.contains("locked")) {
+        // this.initialColors.push(hexText.innerText);
+        return;
+      } else {
+        this.initialColors.push(randomColor.hex());
+      }
+
       hexText.innerText = randomColor;
       div.style.background = randomColor;
-
-      // Add generated color to array
-      this.initialColors.push(randomColor.hex());
 
       //contrast check
       this.checkTextContrast(randomColor, hexText);
 
-      const icon = div.querySelector(".controls button");
+      const icon = div.querySelectorAll(".controls button");
 
-      this.checkTextContrast(randomColor, icon);
+      icon.forEach((i) => {
+        this.checkTextContrast(randomColor, i);
+      });
 
       //   Initialize slider color
       const color = chroma(randomColor);
@@ -166,6 +207,26 @@ class PrettyPalette {
     //   popupBox.classList.remove("active");
     // }, 1000);
   }
+  handleAdjust(e, index) {
+    const sliders = document.querySelectorAll(".sliders");
+    sliders[index].classList.toggle("active");
+
+    //Add event listener to close
+    this.sliderClose.forEach((closeBtn, index) => {
+      closeBtn.addEventListener("click", (e) => {
+        sliders[index].classList.remove("active");
+      });
+    });
+  }
+  handleLock(e, index) {
+    this.color[index].classList.toggle("locked");
+    if (this.color[index].classList.contains("locked")) {
+      this.lock[index].innerHTML = `<i class="fas fa-lock"></i>`;
+    }
+    if (!this.color[index].classList.contains("locked")) {
+      this.lock[index].innerHTML = `<i class="fas fa-lock-open"></i>`;
+    }
+  }
 }
 
 const colorPalette = new PrettyPalette();
@@ -189,3 +250,17 @@ colorPalette.currentHexes.forEach((hex) => {
     colorPalette.copyToClipboard(hex);
   });
 });
+
+colorPalette.adjust.forEach((adjustBtn, index) => {
+  adjustBtn.addEventListener("click", (e) => {
+    colorPalette.handleAdjust(e, index);
+  });
+});
+
+colorPalette.lock.forEach((lock, index) => {
+  lock.addEventListener("click", (e) => {
+    colorPalette.handleLock(e, index);
+  });
+});
+
+colorPalette.eventListeners();
