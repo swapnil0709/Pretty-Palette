@@ -17,7 +17,9 @@ class PrettyPalette {
     this.libraryContainer = document.querySelector(".library-container");
     this.libraryPopup = document.querySelector(".library-popup");
     this.closeLibrary = document.querySelector(".close-library");
-    let initialColors;
+    this.saveInput = document.querySelector(".save-name");
+    this.initialColors;
+    this.savedPalette = [];
   }
   eventListeners() {
     //Save Button
@@ -28,6 +30,9 @@ class PrettyPalette {
     this.closeSave.addEventListener("click", () => {
       this.saveContainer.classList.remove("active");
       this.savePopup.classList.remove("active");
+    });
+    this.saveBtn.addEventListener("click", (e) => {
+      this.savePalette();
     });
 
     // Library Button
@@ -61,7 +66,7 @@ class PrettyPalette {
 
       // Add generated color to array
       if (div.classList.contains("locked")) {
-        // this.initialColors.push(hexText.innerText);
+        this.initialColors.push(hexText.innerText);
         return;
       } else {
         this.initialColors.push(randomColor.hex());
@@ -226,6 +231,33 @@ class PrettyPalette {
     if (!this.color[index].classList.contains("locked")) {
       this.lock[index].innerHTML = `<i class="fas fa-lock-open"></i>`;
     }
+  }
+  savePalette(e) {
+    this.saveContainer.classList.remove("active");
+    this.savePopup.classList.remove("active");
+    const name = this.saveInput.value;
+    let colors = [];
+    this.currentHexes.forEach((hex) => {
+      colors.push(hex.innerText);
+    });
+    //Generate object
+    let paletteNum = this.savedPalette.length;
+    const paletteObject = { name: name, colors: colors, Num: paletteNum }; //If name and value name is same we can just write name
+    this.savedPalette.push(paletteObject);
+
+    //Save to Local storage
+    this.saveToLocal(paletteObject);
+    this.saveInput.value = "";
+  }
+  saveToLocal(obj) {
+    let localPalettes;
+    if (localStorage.getItem("palettes") === null) {
+      localPalettes = [];
+    } else {
+      localPalettes = JSON.parse(localStorage.getItem("palettes"));
+    }
+    localPalettes.push(obj);
+    localStorage.setItem("palettes", JSON.stringify(localPalettes));
   }
 }
 

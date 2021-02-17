@@ -30,7 +30,9 @@
   // We are adding adjustment class
   transform: translateY(100px);
   transition: all 0.5s ease-in-out;
-
+  span {
+    color: black;
+  }
   button {
     outline: none;
     position: absolute;
@@ -130,7 +132,8 @@ input[type="range"] {
     transition: transform 0.5s ease-in-out;
     transform: translateY(-2rem);
 
-    button {
+    .close-save,
+    .close-library {
       outline: none;
       position: absolute;
       top: 0;
@@ -143,6 +146,23 @@ input[type="range"] {
       font-weight: bold;
       border-top-right-radius: 1rem;
       border-bottom-left-radius: 1rem;
+    }
+    .submit-save {
+      outline: none;
+      border-radius: 1rem;
+      padding: 0.5rem 1rem;
+      background: black;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+    }
+    .save-name {
+      width: 40%;
+      outline: none;
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      font-family: "Mulish", sans-serif;
     }
 
     h4 {
