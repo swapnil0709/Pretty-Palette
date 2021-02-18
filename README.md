@@ -22,7 +22,7 @@ Create Own Color Palette Here -> https://swapnil0709.github.io/Pretty-Palette/
 9. Copy to Clipboard by clicking on color hex.
 
 
-#Website preview:
+# Website preview:
 
 ![alt-text](https://github.com/swapnil0709/Pretty-Palette/blob/master/site%20snaps/pretty-home.png)
 ![alt-text](https://github.com/swapnil0709/Pretty-Palette/blob/master/site%20snaps/Dark-mode.png)
