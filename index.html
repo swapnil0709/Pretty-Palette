@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="./styles/style.css" />
     <title>Pretty-Palette</title>
   </head>
-  <body>
+  <body class="light">
     <main class="colors">
       <div class="color">
         <h2>Hex</h2>
@@ -31,8 +31,8 @@
           <button class="adjust"><i class="fas fa-sliders-h"></i></button>
           <button class="lock"><i class="fas fa-lock-open"></i></button>
         </div>
-        <div class="sliders">
-          <button class="close-adjustment">X</button>
+        <div class="sliders mode-sliders">
+          <button class="close-adjustment mode-close">X</button>
           <span>Hue</span>
           <input
             type="range"
@@ -71,8 +71,8 @@
           <button class="adjust"><i class="fas fa-sliders-h"></i></button>
           <button class="lock"><i class="fas fa-lock-open"></i></button>
         </div>
-        <div class="sliders">
-          <button class="close-adjustment">X</button>
+        <div class="sliders mode-sliders">
+          <button class="close-adjustment mode-close">X</button>
           <span>Hue</span>
           <input
             type="range"
@@ -111,8 +111,8 @@
           <button class="adjust"><i class="fas fa-sliders-h"></i></button>
           <button class="lock"><i class="fas fa-lock-open"></i></button>
         </div>
-        <div class="sliders">
-          <button class="close-adjustment">X</button>
+        <div class="sliders mode-sliders">
+          <button class="close-adjustment mode-close">X</button>
           <span>Hue</span>
           <input
             type="range"
@@ -151,8 +151,8 @@
           <button class="adjust"><i class="fas fa-sliders-h"></i></button>
           <button class="lock"><i class="fas fa-lock-open"></i></button>
         </div>
-        <div class="sliders">
-          <button class="close-adjustment">X</button>
+        <div class="sliders mode-sliders">
+          <button class="close-adjustment mode-close">X</button>
           <span>Hue</span>
           <input
             type="range"
@@ -191,8 +191,8 @@
           <button class="adjust"><i class="fas fa-sliders-h"></i></button>
           <button class="lock"><i class="fas fa-lock-open"></i></button>
         </div>
-        <div class="sliders">
-          <button class="close-adjustment">X</button>
+        <div class="sliders mode-sliders">
+          <button class="close-adjustment mode-close">X</button>
           <span>Hue</span>
           <input
             type="range"
@@ -226,50 +226,56 @@
         </div>
       </div>
     </main>
-    <div class="panel">
+    <div class="panel mode-panel">
       <div class="library-panel">
-        <button class="library">
+        <button class="library mode-btn">
           <i class="fas fa-book-open"></i>
         </button>
         <p>Library</p>
       </div>
       <div class="generate-panel">
-        <button class="generate">
+        <button class="generate mode-btn">
           <i class="fas fa-sync"></i>
         </button>
         <p>Generate</p>
       </div>
       <div class="save-panel">
-        <button class="save">
+        <button class="save mode-btn">
           <i class="fas fa-save"></i>
         </button>
         <p>Save</p>
       </div>
       <div class="empty-library">
-        <button class="empty">
+        <button class="empty mode-btn">
           <i class="fas fa-trash-alt"></i>
         </button>
         <p>Empty Library</p>
       </div>
+      <div class="dark-library">
+        <button class="darkBtn mode-btn">
+          <i class="fas fa-moon"></i>
+        </button>
+        <p>Dark Mode</p>
+      </div>
     </div>
     <div class="copy-container">
-      <div class="copy-popup">
+      <div class="copy-popup mode-popup">
         <h3>Copied to clipboard</h3>
         <h4>&#128077;</h4>
       </div>
     </div>
 
     <div class="save-container">
-      <div class="save-popup">
-        <button class="close-save">X</button>
+      <div class="save-popup mode-popup">
+        <button class="close-save mode-close">X</button>
         <h4>Give a name to your palette</h4>
         <input type="text" maxlength="35" class="save-name" />
         <button type="submit" class="submit-save">Save</button>
       </div>
     </div>
     <div class="library-container">
-      <div class="library-popup">
-        <button class="close-library">X</button>
+      <div class="library-popup mode-popup">
+        <button class="close-library mode-close">X</button>
         <h4>Pick your palette</h4>
       </div>
     </div>

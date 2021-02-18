@@ -5,6 +5,7 @@ class PrettyPalette {
     this.generateBtn = document.querySelector(".generate");
     this.allLockAndAdjustIcons = document.querySelectorAll(".controls button");
     this.allSliders = document.querySelectorAll("input[type='range']");
+    this.all15SliderInputs = document.querySelectorAll(".sliders input");
     this.allAdjusts = document.querySelectorAll(".adjust");
     this.allSlidersClose = document.querySelectorAll(".close-adjustment");
     this.allLocks = document.querySelectorAll(".lock");
@@ -22,6 +23,7 @@ class PrettyPalette {
     this.allHueSliders = document.querySelectorAll(".hue-input");
     this.allBrightnessSliders = document.querySelectorAll(".brightness-input");
     this.allSaturationSliders = document.querySelectorAll(".saturation-input");
+    this.darkBtn = document.querySelector(".darkBtn");
     this.initialColors;
     this.savedPalette = [];
   }
@@ -33,6 +35,23 @@ class PrettyPalette {
 
     this.generateBtn.addEventListener("click", () => {
       this.applyColors();
+    });
+
+    // Copy To Clipboard
+
+    this.allDivsHexes.forEach((hex) => {
+      hex.addEventListener("click", () => {
+        this.copyToClipboard(hex);
+      });
+    });
+
+    // Slider close buttons
+
+    this.allSlidersClose.forEach((closeBtn, index) => {
+      closeBtn.addEventListener("click", (e) => {
+        const sliders = document.querySelectorAll(".sliders");
+        sliders[index].classList.toggle("active");
+      });
     });
 
     //Save Button
@@ -58,38 +77,47 @@ class PrettyPalette {
       this.libraryPopup.classList.remove("active");
     });
 
-    this.allSliders.forEach((slider) => {
-      slider.addEventListener("input", (e) => {
-        this.hslControls(e);
-      });
-    });
-
     this.colorDivs.forEach((div, index) => {
       div.addEventListener("change", () => {
         this.updateTextUi(index);
       });
     });
 
-    this.allDivsHexes.forEach((hex) => {
-      hex.addEventListener("click", () => {
-        this.copyToClipboard(hex);
-      });
-    });
-
+    //Handle Adjusts
     this.allAdjusts.forEach((adjustBtn, index) => {
       adjustBtn.addEventListener("click", (e) => {
-        this.handleAdjust(e, index);
+        const sliders = document.querySelectorAll(".sliders");
+        sliders[index].classList.toggle("active");
       });
     });
 
+    //Handle locks
     this.allLocks.forEach((lock, index) => {
       lock.addEventListener("click", (e) => {
         this.handleLock(e, index);
       });
     });
 
+    //Handle Empty Library
     this.emptyBtn.addEventListener("click", () => {
       this.emptyLibrary();
+    });
+
+    this.allSliders.forEach((slider) => {
+      slider.addEventListener("input", (e) => {
+        this.hslControls(e);
+      });
+    });
+
+    // Dark mode button
+    this.darkBtn.addEventListener("click", () => {
+      if (document.body.classList.contains("light")) {
+        document.body.classList.remove("light");
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.add("light");
+        document.body.classList.remove("dark");
+      }
     });
   }
 
@@ -145,7 +173,7 @@ class PrettyPalette {
     });
 
     //Reset Inputs
-    this.resetInputs();
+    this.resetInputs(this.initialColors);
   }
 
   checkTextIconContrast(color, text, adjust, lock) {
@@ -160,7 +188,7 @@ class PrettyPalette {
     //   Scale Saturation here .s means saturation .l means brightness .h means hue hence hsl(hue,sat,bright)
     const noSat = chroma(color).set("hsl.s", 0);
     const fullSat = chroma(color).set("hsl.s", 1);
-    const scaleSat = chroma.scale([noSat, color, fullSat]);
+    const scaleSat = chroma.scale([noSat, chroma(color), fullSat]);
 
     // Brightness
     const midBright = chroma(color).set("hsl.l", 0.5);
@@ -188,6 +216,7 @@ class PrettyPalette {
     let slider = e.target.parentElement.querySelectorAll("input[type='range']");
 
     const [hue, brightness, saturation] = slider; //Extracting individual values
+
     const bgColor = this.initialColors[index];
 
     let color = chroma(bgColor)
@@ -203,43 +232,36 @@ class PrettyPalette {
   updateTextUi(index) {
     const currentDiv = this.colorDivs[index];
     const color = chroma(currentDiv.style.backgroundColor);
+    const hexText = currentDiv.querySelector("h2");
+    const adjust = currentDiv.children[1].children[0];
+    const lock = currentDiv.children[1].children[1];
+    hexText.innerText = color.hex();
 
-    const currentText = currentDiv.querySelector("h2");
-    const icons = currentDiv.querySelectorAll(".controls button");
-
-    currentText.innerText = color.hex();
-
-    this.checkTextIconContrast(color, currentText);
-    for (let icon of icons) {
-      this.checkTextIconContrast(color, icon);
-    }
+    this.checkTextIconContrast(color, hexText, adjust, lock);
   }
-  resetInputs() {
-    const sliderInputs = document.querySelectorAll(".sliders input");
-
-    sliderInputs.forEach((slider) => {
+  resetInputs(colorToReset) {
+    this.all15SliderInputs.forEach((slider, index) => {
       if (slider.name === "hue") {
-        const divHexColor = this.initialColors[slider.getAttribute("data-hue")];
-        const hueValue = chroma(divHexColor).hsl()[0]; // h=hue index 0
+        const hueColor = colorToReset[slider.getAttribute("data-hue")];
+        const hueValue = chroma(hueColor).hsl()[0]; // h=hue index 0
         slider.value = Math.floor(hueValue);
       }
 
       if (slider.name === "brightness") {
-        const divHexColor = this.initialColors[
-          slider.getAttribute("data-bright")
-        ];
-        const brightValue = chroma(divHexColor).hsl()[2]; //l=brightness index 2
+        const brightColor = colorToReset[slider.getAttribute("data-bright")];
+        const brightValue = chroma(brightColor).hsl()[2]; //l=brightness index 2
         slider.value = Math.floor(brightValue * 100) / 100;
       }
 
       if (slider.name === "saturation") {
-        const divHexColor = this.initialColors[slider.getAttribute("data-sat")];
-        const satValue = chroma(divHexColor).hsl()[1]; //s = saturation index 1
+        const satColor = colorToReset[slider.getAttribute("data-sat")];
+        const satValue = chroma(satColor).hsl()[1]; //s = saturation index 1
 
         slider.value = Math.floor(satValue * 100) / 100;
       }
     });
   }
+
   copyToClipboard(hex) {
     const element = document.createElement("textarea");
     element.value = hex.innerText;
@@ -264,17 +286,7 @@ class PrettyPalette {
     //   popupBox.classList.remove("active");
     // }, 1000);
   }
-  handleAdjust(e, index) {
-    const sliders = document.querySelectorAll(".sliders");
-    sliders[index].classList.toggle("active");
 
-    //Add event listener to close
-    this.allSlidersClose.forEach((closeBtn, index) => {
-      closeBtn.addEventListener("click", (e) => {
-        sliders[index].classList.remove("active");
-      });
-    });
-  }
   handleLock(e, index) {
     this.colorDivs[index].classList.toggle("locked");
     if (this.colorDivs[index].classList.contains("locked")) {
@@ -293,32 +305,42 @@ class PrettyPalette {
       colors.push(hex.innerText);
     });
     //Generate object
-    const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
+    let fetchedFromLocal;
+
+    if (localStorage.getItem("palettes") === null) {
+      fetchedFromLocal = "";
+    } else {
+      fetchedFromLocal = JSON.parse(localStorage.getItem("palettes"));
+    }
 
     let paletteNum;
 
-    if (paletteObjects) {
-      paletteNum = paletteObjects.length;
+    if (fetchedFromLocal.length >= 0) {
+      paletteNum = fetchedFromLocal.length;
     } else {
       paletteNum = this.savedPalette.length;
     }
 
-    const paletteObject = { name: name, colors: colors, Num: paletteNum }; //If name and value name is same we can just write name
-    this.savedPalette.push(paletteObject);
+    const savedObject = { name: name, colors: colors, Num: paletteNum }; //If name and value name is same we can just write name
+    this.savedPalette.push(savedObject);
 
     //Save to Local storage
-    this.saveToLocal(paletteObject);
+    this.saveToLocal(savedObject);
     this.saveInput.value = "";
+    this.generateLibraryPalettes(savedObject, this.savedPalette);
+  }
 
+  generateLibraryPalettes(savedObject, savedPalette) {
     // Generate palette for library
+
     const palette = document.createElement("div");
     palette.classList.add("custom-palette");
     const title = document.createElement("h4");
-    title.innerText = paletteObject.name;
+    title.innerText = savedObject.name;
     const preview = document.createElement("div");
     preview.classList.add("small-preview");
 
-    paletteObject.colors.forEach((color) => {
+    savedObject.colors.forEach((color) => {
       const smallDiv = document.createElement("div");
       smallDiv.style.backgroundColor = color;
       preview.appendChild(smallDiv);
@@ -328,40 +350,43 @@ class PrettyPalette {
 
     paletteBtn.classList.add("pick-palette-btn");
 
-    paletteBtn.classList.add(paletteObject.Num);
+    paletteBtn.classList.add(savedObject.Num);
     paletteBtn.innerText = "Select";
 
     paletteBtn.addEventListener("click", (e) => {
       this.libraryContainer.classList.remove("active");
       this.libraryPopup.classList.remove("active");
       const paletteIndex = e.target.classList[1];
-
       this.initialColors = [];
-      this.savedPalette[paletteIndex].colors.forEach((color, index) => {
+      savedPalette[paletteIndex].colors.forEach((color, index) => {
+        this.initialColors.push(color);
         this.colorDivs[index].style.background = color;
-        const text = this.colorDivs[index].children[0];
 
-        this.checkTextIconContrast(color, text);
+        const text = this.colorDivs[index].children[0];
+        const adjust = this.colorDivs[index].children[1].children[0];
+        const lock = this.colorDivs[index].children[1].children[1];
+        this.checkTextIconContrast(color, text, adjust, lock);
         this.updateTextUi(index);
       });
-      this.resetInputs();
+      this.resetInputs(savedPalette[paletteIndex].colors);
     });
 
-    //Append to Library
+    // Append to Library
     palette.appendChild(title);
     palette.appendChild(preview);
     palette.appendChild(paletteBtn);
     this.libraryPopup.appendChild(palette);
   }
+
   saveToLocal(obj) {
-    let localPalettes;
+    let tempPalette;
     if (localStorage.getItem("palettes") === null) {
-      localPalettes = [];
+      tempPalette = [];
     } else {
-      localPalettes = JSON.parse(localStorage.getItem("palettes"));
+      tempPalette = JSON.parse(localStorage.getItem("palettes"));
     }
-    localPalettes.push(obj);
-    localStorage.setItem("palettes", JSON.stringify(localPalettes));
+    tempPalette.push(obj);
+    localStorage.setItem("palettes", JSON.stringify(tempPalette));
   }
 
   getFromLocal() {
@@ -369,53 +394,20 @@ class PrettyPalette {
     if (localStorage.getItem("palettes") === null) {
       localPalettes = [];
     } else {
-      const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
-      this.savedPalette = [...paletteObjects];
-      paletteObjects.forEach((obj) => {
-        const palette = document.createElement("div");
-        palette.classList.add("custom-palette");
-        const title = document.createElement("h4");
-        title.innerText = obj.name;
-        const preview = document.createElement("div");
-        preview.classList.add("small-preview");
-        obj.colors.forEach((color) => {
-          const smallDiv = document.createElement("div");
-          smallDiv.style.backgroundColor = color;
-          preview.appendChild(smallDiv);
-        });
-        const paletteBtn = document.createElement("button");
-
-        paletteBtn.classList.add("pick-palette-btn");
-
-        paletteBtn.classList.add(obj.Num);
-        paletteBtn.innerText = "Select";
-        paletteBtn.addEventListener("click", (e) => {
-          this.libraryContainer.classList.remove("active");
-          this.libraryPopup.classList.remove("active");
-          const paletteIndex = e.target.classList[1];
-
-          this.initialColors = [];
-          paletteObjects[paletteIndex].colors.forEach((color, index) => {
-            this.initialColors.push(color);
-            this.colorDivs[index].style.background = color;
-            const text = this.colorDivs[index].children[0];
-
-            this.checkTextIconContrast(color, text);
-            this.updateTextUi(index);
-          });
-          this.resetInputs();
-        });
-        //Append to Library
-        palette.appendChild(title);
-        palette.appendChild(preview);
-        palette.appendChild(paletteBtn);
-        this.libraryPopup.appendChild(palette);
+      localPalettes = JSON.parse(localStorage.getItem("palettes"));
+      this.savedPalette = [...localPalettes];
+      localPalettes.forEach((obj) => {
+        this.generateLibraryPalettes(obj, localPalettes);
       });
     }
   }
 
   emptyLibrary() {
     localStorage.clear();
+    const divs = document.querySelectorAll(".custom-palette");
+    divs.forEach((div) => {
+      div.remove();
+    });
   }
 }
 

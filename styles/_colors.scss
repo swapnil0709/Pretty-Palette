@@ -30,9 +30,7 @@
   // We are adding adjustment class
   transform: translateY(100px);
   transition: all 0.5s ease-in-out;
-  span {
-    color: black;
-  }
+
   button {
     outline: none;
     position: absolute;
@@ -139,10 +137,8 @@ input[type="range"] {
       top: 0;
       right: 0;
       padding: 0.5rem;
-      background: black;
       border: none;
       cursor: pointer;
-      color: white;
       font-weight: bold;
       border-top-right-radius: 1rem;
       border-bottom-left-radius: 1rem;
@@ -151,10 +147,8 @@ input[type="range"] {
       outline: none;
       border-radius: 1rem;
       padding: 0.5rem 1rem;
-      background: black;
       border: none;
       cursor: pointer;
-      color: white;
       font-weight: bold;
     }
     .save-name {
@@ -212,9 +206,67 @@ input[type="range"] {
   outline: none;
   border: none;
   font-size: 1.2rem;
-  background: black;
   border: none;
   cursor: pointer;
-  color: white;
   padding: 1rem;
+}
+
+.mode-btn {
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.dark {
+  .mode-btn {
+    background: black;
+    color: white;
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+    transition: all 0.5s ease-in-out;
+  }
+  .mode-panel {
+    background: black;
+  }
+  p {
+    color: white;
+  }
+  .mode-popup {
+    background: black;
+    color: white;
+  }
+  .mode-close {
+    background: white;
+    color: black;
+  }
+  .submit-save {
+    background: white;
+    color: black;
+  }
+  .mode-sliders {
+    background: black;
+    color: white;
+  }
+  span {
+    color: white;
+  }
+}
+.light {
+  .mode-btn {
+    background: white;
+    color: black;
+    box-shadow: 0px 0px 10px 5px rgba(180, 179, 179, 0.4);
+    transition: all 0.5s ease-in-out;
+  }
+  .mode-close {
+    background: black;
+
+    color: white;
+  }
+  .submit-save {
+    background: black;
+    color: white;
+  }
+  span {
+    color: black;
+  }
 }

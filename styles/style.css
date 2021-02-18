@@ -84,10 +84,6 @@ path {
   transition: all 0.5s ease-in-out;
 }
 
-.sliders span {
-  color: black;
-}
-
 .sliders button {
   outline: none;
   position: absolute;
@@ -285,10 +281,8 @@ input[type="range"] {
   top: 0;
   right: 0;
   padding: 0.5rem;
-  background: black;
   border: none;
   cursor: pointer;
-  color: white;
   font-weight: bold;
   border-top-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
@@ -306,10 +300,8 @@ input[type="range"] {
   outline: none;
   border-radius: 1rem;
   padding: 0.5rem 1rem;
-  background: black;
   border: none;
   cursor: pointer;
-  color: white;
   font-weight: bold;
 }
 
@@ -403,10 +395,77 @@ input[type="range"] {
   outline: none;
   border: none;
   font-size: 1.2rem;
-  background: black;
   border: none;
   cursor: pointer;
-  color: white;
   padding: 1rem;
+}
+
+.mode-btn:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.dark .mode-btn {
+  background: black;
+  color: white;
+  -webkit-box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+          box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.dark .mode-panel {
+  background: black;
+}
+
+.dark p {
+  color: white;
+}
+
+.dark .mode-popup {
+  background: black;
+  color: white;
+}
+
+.dark .mode-close {
+  background: white;
+  color: black;
+}
+
+.dark .submit-save {
+  background: white;
+  color: black;
+}
+
+.dark .mode-sliders {
+  background: black;
+  color: white;
+}
+
+.dark span {
+  color: white;
+}
+
+.light .mode-btn {
+  background: white;
+  color: black;
+  -webkit-box-shadow: 0px 0px 10px 5px rgba(180, 179, 179, 0.4);
+          box-shadow: 0px 0px 10px 5px rgba(180, 179, 179, 0.4);
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.light .mode-close {
+  background: black;
+  color: white;
+}
+
+.light .submit-save {
+  background: black;
+  color: white;
+}
+
+.light span {
+  color: black;
 }
 /*# sourceMappingURL=style.css.map */
