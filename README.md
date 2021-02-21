@@ -1,12 +1,12 @@
 # Pretty-Palette
-A beautiful color-palette for easy color picking for your next Project : )
+A beautiful color-palette for easy color picking for your next project : )
 
 Create Own Color Palette Here -> https://swapnil0709.github.io/Pretty-Palette/
 
 # Skills-
 
 1. HTML
-2. Saas
+2. Sass
 3. Javascript
 
 # Features
@@ -18,8 +18,8 @@ Create Own Color Palette Here -> https://swapnil0709.github.io/Pretty-Palette/
 5. Save your favorite colors in Library.
 6. Dark Mode support
 7. Saved color palettes are available even after browser restart
-8. The saved colors will be removed with Empty Library button.
-9. Copy to Clipboard by clicking on color hex.
+8. The saved colors will be removed with the Empty Library button.
+9. Copy to Clipboard by clicking on the color hex.
 
 
 # Website preview:
